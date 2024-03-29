@@ -20,11 +20,11 @@ cd $SLURM_SUBMIT_DIR
 #Set variables defining the analysis: 
 BN_BIN=/apps/easybuild/software/infer-skylake/BirdNET/20201214-fosscuda-2019b-Python-3.7.4/analyze.py 
 #IN_DIR=/home/ehunter1/bn_arc/input/Vya_Perm_2018
-IN_DIR=/projects/birdnet/Chemours/Data_2024_removed_small_files
+IN_DIR=/projects/birdnet/test/data_2023_06
 #OUT_DIR=/home/ehunter1/bn_arc/output/Output_Vya_Perm_2018
-OUT_DIR=/projects/birdnet/Chemours/Data_2024_removed_small_files_output
+OUT_DIR=/projects/birdnet/Chemours/data_2023_06_output
 
 #Run the analysis 
 echo "`date` Starting Birdnet..." 
-python $BN_BIN --i $IN_DIR --o $OUT_DIR --lat 31.0429 --lon -81.9687  #Chemours
+python $BN_BIN --i $IN_DIR --o $OUT_DIR --lat 31.0429 --lon -81.9687  #edit with the rough coordinates of where your acoustic files were recorded
 echo "`date` Done processing $IN_DIR"
