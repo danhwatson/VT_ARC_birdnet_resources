@@ -22,7 +22,7 @@ BN_BIN=/apps/easybuild/software/infer-skylake/BirdNET/20201214-fosscuda-2019b-Py
 #IN_DIR=/home/ehunter1/bn_arc/input/Vya_Perm_2018
 IN_DIR=/projects/birdnet/test/data_2023_06
 #OUT_DIR=/home/ehunter1/bn_arc/output/Output_Vya_Perm_2018
-OUT_DIR=/projects/birdnet/Chemours/data_2023_06_output
+OUT_DIR=/projects/birdnet/test/data_2023_06_output
 
 #Run the analysis 
 echo "`date` Starting Birdnet..." 
