@@ -5,11 +5,11 @@
 #SBATCH --ntasks=1 
 #SBATCH --cpus-per-task=1 
 #SBATCH --gres=gpu:1 
-#SBATCH --time=05:00:00 
-#SBATCH --output=/projects/birdnet/Chemours_KL/myfinds_%j.out
+#SBATCH --time=2-00:00:00 
+#SBATCH --output=/projects/birdnet/chemours/myfinds_%j.out
 
 #specify the input folder to process
-IN_DIR=/projects/birdnet/Chemours_KL/testfiles
+IN_DIR=/projects/birdnet/chemours/Data_2024
 
 #make a directory to put the small files in
 SMALL_DIR=${IN_DIR}_smallfiles
