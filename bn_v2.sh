@@ -38,3 +38,5 @@ date
 # Deactivate the environment
 conda deactivate
 
+echo "All done"
+
