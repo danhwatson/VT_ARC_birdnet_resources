@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=bn_v2
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=12
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=48
 #SBATCH --partition=intel_q
 #SBATCH --account=birdnet
 #SBATCH --time=4-00:00:00

@@ -34,5 +34,5 @@ for SUB_DIR in $(find $IN_DIR -mindepth 1 -maxdepth 1 -type d); do
   ls -lh $SMALL_DIR
 done
 
-echo "All done."
+echo "All done"
 
