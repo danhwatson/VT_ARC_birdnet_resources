@@ -9,7 +9,7 @@
 #SBATCH --output=/projects/birdnet/chemours/myfinds_%j.out
 
 # Specify the input folder to process
-IN_DIR=/projects/birdnet/chemours/Data_2024
+IN_DIR=/projects/birdnet/chemours/data_2024
 
 # Make a base directory to put all the txt files folders
 TXT_BASE_DIR=${IN_DIR}_txtfiles

@@ -10,7 +10,7 @@
 
 # For moving files from subdirectories to the main directory for BirdNET analysis
 # Specify the input folder to process
-IN_DIR=/projects/birdnet/chemours/Data_2024_bn_out
+IN_DIR=/projects/birdnet/chemours/data_2024_bn
 
 echo "Processing subdirectories in $IN_DIR"
 

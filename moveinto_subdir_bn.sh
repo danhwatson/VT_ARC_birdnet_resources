@@ -10,8 +10,8 @@
 
 # For putting BirdNET .txt file back into subdirectories for organization
 # Specify the input and output directories
-IN_DIR=/projects/birdnet/chemours/Data_2024_bn_out
-OUT_BASE_DIR=/projects/birdnet/chemours/Data_2024_bn_out
+IN_DIR=/projects/birdnet/chemours/data_2024_bn
+OUT_BASE_DIR=/projects/birdnet/chemours/data_2024_bn
 
 echo "Sorting files from $IN_DIR into subdirectories in $OUT_BASE_DIR"
 

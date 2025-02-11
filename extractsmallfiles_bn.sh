@@ -9,7 +9,7 @@
 #SBATCH --output=/projects/birdnet/chemours/myfinds_%j.out
 
 #specify the input folder to process
-IN_DIR=/projects/birdnet/chemours/Data_2024
+IN_DIR=/projects/birdnet/chemours/data_2024
 
 #make a directory to put the small files in
 SMALL_DIR=${IN_DIR}_smallfiles

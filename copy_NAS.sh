@@ -22,11 +22,11 @@ module load rclone/1.60.0
 echo "rclone module loaded"
 
 ## cd to path to the containing directory
-cd /projects/birdnet/chemours/Data_2024_bn_out
+cd /projects/birdnet/chemours/data_2024_bn_out
 echo "Changed directory to: $(pwd)"
 
 ## start transfer
-rclone copy /projects/birdnet/chemours/Data_2024_bn_out remote4NAS:HunterLab/Dan_W/Data_2024_out
+rclone copy /projects/birdnet/chemours/data_2024_bn_out remote4NAS:HunterLab/Dan_W/data_2024_out
 echo "rclone copy command executed"
 
 # Print end of script debugging information

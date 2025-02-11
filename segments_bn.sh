@@ -24,7 +24,7 @@ conda install -y numpy tensorflow librosa resampy
 
 # Set directories for input and output in a /projects/birdnet/ directory
 IN_DIR=/projects/birdnet/chemours/data_2024/ # Where the recordings (.wav, .flac, .mp3) are located
-OUT_DIR=/projects/birdnet/chemours/data_2024_bn_out/ # Where bn output is 
+OUT_DIR=/projects/birdnet/chemours/data_2024_bn/ # Where bn output is 
 SEG_DIR=/projects/birdnet/chemours/data_2024_bn_segments/ 
 
 # Run segments
