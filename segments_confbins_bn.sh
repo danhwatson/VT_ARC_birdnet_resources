@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=segments_bn
+#SBATCH --job-name=segments_confbins_bn
 #SBATCH --nodes=2
 #SBATCH --cpus-per-task=48
 #SBATCH --partition=intel_q
 #SBATCH --account=birdnet
 #SBATCH --time=4-00:00:00
-#SBATCH --output=/projects/birdnet/chemours/bn_segments_output/%x_%j.out
+#SBATCH --output=/projects/birdnet/chemours/bn_confbins_segments_output/%x_%j.out
 
 # Load pre-requisite module
 module load site/tinkercliffs/easybuild/setup
@@ -25,11 +25,11 @@ conda install -y numpy tensorflow librosa resampy
 # Set directories for input and output in a /projects/birdnet/ directory
 IN_DIR=/projects/birdnet/chemours/data_2024/ # Where the recordings (.wav, .flac, .mp3) are located
 OUT_DIR=/projects/birdnet/chemours/data_2024_bn_out/ # Where bn output is 
-SEG_DIR=/projects/birdnet/chemours/data_2024_bn_segments/ 
+SEG_DIR=/projects/birdnet/chemours/data_2024_bn_confbins_segments/ 
 
 # Run segments
 date
-python $BNENV/BirdNET-Analyzer/segments.py --audio $IN_DIR --results $OUT_DIR --o $SEG_DIR  --min_conf 0.95 --max_segments 12 --seg_length 3.0 --threads 48
+python $BNENV/BirdNET-Analyzer/segments_confbins.py --audio $IN_DIR --results $OUT_DIR --o $SEG_DIR --max_segments 12 --seg_length 3.0 --threads 48
 date 
 
 # Deactivate the environment

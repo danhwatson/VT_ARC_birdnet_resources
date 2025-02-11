@@ -9,8 +9,7 @@
 #SBATCH --output=/projects/birdnet/Chemours/myfinds_%j.out
 
 # Specify the input folder to process
-IN_DIR=/projects/birdnet/Chemours/Data_2023
-
+IN_DIR=/projects/birdnet/Chemours/data_2024/
 # Specify the minimum and maximum file sizes in megabytes to extract
 MIN_FILE_SIZE_MB=230
 MAX_FILE_SIZE_MB=235

@@ -26,13 +26,13 @@ conda install -y numpy tensorflow librosa resampy
 rm -rf ~/.local/lib/python3.11/site-packages
 
 # Set directories for input and output in a /projects/birdnet/ directory
-IN_DIR=/projects/birdnet/chemours/Data_2024/ # Where the recordings (.wav, .flac, .mp3) are located
-OUT_DIR=/projects/birdnet/chemours/Data_2024_bn_out/ # Where bn output is 
-SEG_DIR=/projects/birdnet/chemours/Data_2024_bn_segments_v2/ 
+#IN_DIR=/projects/birdnet/chemours/Data_2024/ # Where the recordings (.wav, .flac, .mp3) are located
+#OUT_DIR=/projects/birdnet/chemours/Data_2024_bn_out/ # Where bn output is 
+#SEG_DIR=/projects/birdnet/chemours/Data_2024_bn_segments_v2/ 
 
 # Run segments
 date
-python $BNENV/BirdNET-Analyzer/segments_confbins.py --audio $IN_DIR --results $OUT_DIR --o $SEG_DIR --max_segments 300 --seg_length 3.0 --threads 48
+python $BNENV/BirdNET-Analyzer/embeddings.py --i example/ --o example/ --threads 4 --batchsize 16
 date 
 
 # Deactivate the environment

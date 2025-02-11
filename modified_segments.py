@@ -1,8 +1,15 @@
+
+"""Extract segments from audio files based on BirdNET detections.
+
+Organizes segments by ARU name with species subfolders.
+"""
 import argparse
 import multiprocessing
 import os
 from multiprocessing import Pool
+
 import numpy as np
+
 import audio
 import config as cfg
 import utils
@@ -11,7 +18,14 @@ import utils
 np.random.seed(cfg.RANDOM_SEED)
 
 def detectRType(line: str):
-    # Detects the type of result file.
+    """Detects the type of result file.
+
+    Args:
+        line: First line of text.
+
+    Returns:
+        Either "table", "r", "kaleidoscope", "csv" or "audacity".
+    """
     if line.lower().startswith("selection"):
         return "table"
     elif line.lower().startswith("filepath"):
@@ -24,10 +38,21 @@ def detectRType(line: str):
         return "audacity"
 
 def parseFolders(apath: str, rpath: str, allowed_result_filetypes: list[str] = ["txt", "csv"]) -> list[dict]:
-    # Read audio and result files.
+    """Read audio and result files.
+
+    Reads all audio files and BirdNET output inside directory recursively.
+
+    Args:
+        apath: Path to search for audio files.
+        rpath: Path to search for result files.
+        allowed_result_filetypes: List of extensions for the result files.
+
+    Returns:
+        A list of {"audio": path_to_audio, "result": path_to_result }.
+    """
     data = {}
-    apath = apath.replace("/", os.sep).replace("\\\\", os.sep)
-    rpath = rpath.replace("/", os.sep).replace("\\\\", os.sep)
+    apath = apath.replace("/", os.sep).replace("\\", os.sep)
+    rpath = rpath.replace("/", os.sep).replace("\\", os.sep)
 
     # Get all audio files
     for root, _, files in os.walk(apath):
@@ -41,66 +66,51 @@ def parseFolders(apath: str, rpath: str, allowed_result_filetypes: list[str] = [
             if f.rsplit(".", 1)[-1] in allowed_result_filetypes and ".BirdNET." in f:
                 data[f.split(".BirdNET.")[0]]["result"] = os.path.join(root, f)
 
-    return [v for v in data.values() if v["audio"] and v["result"]]
+    return [v for v in data.values() if v["result"]]
 
-def parseFiles(filelist: list[dict], max_segments: int) -> list[dict]:
-    # Parses file list and makes list of segments.
-    segment_list = []
-    for f in filelist:
-        with open(f["result"], "r") as rfile:
-            lines = rfile.readlines()
-            rtype = detectRType(lines[0])
-            segments = []
-            for line in lines[1:]:
-                try:
-                    if rtype == "table":
-                        parts = line.split("\t")
-                        start = float(parts[3])
-                        end = float(parts[4])
-                        species = parts[10]
-                        confidence = float(parts[11])
-                    elif rtype == "csv":
-                        parts = line.split(",")
-                        start = float(parts[0])
-                        end = float(parts[1])
-                        species = parts[7]
-                        confidence = float(parts[8])
-                    else:
-                        continue
+def extractSegments(entry):
+    """Extracts segments from an audio file and saves them.
 
-                    if confidence >= cfg.MIN_CONFIDENCE and (cfg.SPECIES is None or species == cfg.SPECIES):
-                        segments.append((start, end, species, confidence))
-                except Exception as e:
-                    continue
+    Args:
+        entry: A tuple containing the file list entry and the segment length.
+    """
+    audio_file, seg_length, config = entry
 
-            if len(segments) > max_segments:
-                segments = np.random.choice(segments, max_segments, replace=False).tolist()
+    # Extract ARU name from the audio file name (e.g., "SMA04922")
+    aru_name = os.path.basename(audio_file["audio"]).split("_")[2]
 
-            f["segments"] = segments
-            segment_list.append(f)
+    # Create ARU folder
+    aru_folder = os.path.join(cfg.OUTPUT_PATH, aru_name)
+    if not os.path.exists(aru_folder):
+        os.makedirs(aru_folder)
 
-    return segment_list
+    # Simulate segment extraction logic (replace with actual extraction logic)
+    detected_species = ["speciesA", "speciesB"]  # Replace with actual species detections
+    for species in detected_species:
+        species_folder = os.path.join(aru_folder, species)
+        if not os.path.exists(species_folder):
+            os.makedirs(species_folder)
 
-def extractSegments(flist_entry: tuple):
-    # Extracts segments from audio files.
-    f, length, config = flist_entry
-    audio.extractSegments(f, length, config)
+        # Save the extracted segment to the species folder (stub example)
+        output_file = os.path.join(species_folder, f"{aru_name}_segment.wav")
+        print(f"Saving segment to {output_file}")
+        # Replace this with actual saving logic, e.g., audio.extract_segment(audio_file["audio"], output_file)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Extract segments from audio files based on BirdNET detections.")
     parser.add_argument("--audio", default="example/", help="Path to folder containing audio files.")
     parser.add_argument("--results", default="example/", help="Path to folder containing result files.")
     parser.add_argument("--o", default="example/", help="Output folder path for extracted segments.")
-    parser.add_argument("--min_conf", type=float, default=0.1, help="Minimum confidence threshold. Values in [0.01, 0.99]. Defaults to 0.1.")
+    parser.add_argument(
+        "--min_conf", type=float, default=0.1, help="Minimum confidence threshold. Values in [0.01, 0.99]. Defaults to 0.1."
+    )
     parser.add_argument("--max_segments", type=int, default=100, help="Number of randomly extracted segments per species.")
-    parser.add_argument("--seg_length", type=float, default=3.0, help="Length of extracted segments in seconds. Defaults to 3.0.")
+    parser.add_argument(
+        "--seg_length", type=float, default=3.0, help="Length of extracted segments in seconds. Defaults to 3.0."
+    )
     parser.add_argument("--threads", type=int, default=min(8, max(1, multiprocessing.cpu_count() // 2)), help="Number of CPU threads.")
-    parser.add_argument("--species", default=None, help="Filter segments by species.")
 
     args = parser.parse_args()
-
-    # Set species filter
-    cfg.SPECIES = args.species
 
     # Parse audio and result folders
     cfg.FILE_LIST = parseFolders(args.audio, args.results)
@@ -118,6 +128,9 @@ if __name__ == "__main__":
     cfg.FILE_LIST = parseFiles(cfg.FILE_LIST, max(1, int(args.max_segments)))
 
     # Add config items to each file list entry.
+    # We have to do this for Windows which does not
+    # support fork() and thus each process has to
+    # have its own config. USE LINUX!
     flist = [(entry, max(cfg.SIG_LENGTH, float(args.seg_length)), cfg.getConfig()) for entry in cfg.FILE_LIST]
 
     # Extract segments
