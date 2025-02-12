@@ -29,4 +29,4 @@ find $SRC_DIR2 -type f -exec mv {} $TARGET_DIR/ \;
 echo "Done moving files from $SRC_DIR2"
 
 echo "All files have been combined into $TARGET_DIR"
-echo "Script execution completed."/HunterLab/Dan_W/data_2024_07/Data_2024/SMA10415_Data,0,1720115802065
+echo "Script execution completed."/HunterLab/Dan_W/data_2024_07/data_2024/
