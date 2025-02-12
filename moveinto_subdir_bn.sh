@@ -8,10 +8,10 @@
 #SBATCH --time=2-00:00:00 
 #SBATCH --output=/projects/birdnet/chemours/myfinds_%j.out
 
-# For putting BirdNET .txt file back into subdirectories for organization
+# For putting audio or BirdNET .txt files back into subdirectories for organization
 # Specify the input and output directories
-IN_DIR=/projects/birdnet/chemours/data_2024_bn
-OUT_BASE_DIR=/projects/birdnet/chemours/data_2024_bn
+IN_DIR=/projects/birdnet/chemours/data_2024
+OUT_BASE_DIR=/projects/birdnet/chemours/data_2024
 
 echo "Sorting files from $IN_DIR into subdirectories in $OUT_BASE_DIR"
 
@@ -29,7 +29,7 @@ for FILE in $IN_DIR/*; do
     # Move the file to the subdirectory
     mv $FILE $SUB_DIR
 
-    echo "Moved $FILE to $SUB_DIR"bn
+    echo "Moved $FILE to $SUB_DIR"
   fi
 done
 
