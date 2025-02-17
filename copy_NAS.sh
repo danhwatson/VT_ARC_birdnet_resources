@@ -18,7 +18,7 @@ if [ -z ${HOME+x} ]; then
 fi
 
 ## load rclone
-module load rclone/1.60.0
+module load rclone/1.66.0
 echo "rclone module loaded"
 
 ## cd to path to the containing directory
