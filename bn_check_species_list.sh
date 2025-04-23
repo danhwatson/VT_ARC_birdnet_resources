@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=bn_check_species_list_w1
+#SBATCH --job-name=bn_check_species_list_w4
 #SBATCH --nodes=1 
 #SBATCH --cpus-per-task=1  
 #SBATCH --partition=intel_q
 #SBATCH --account=birdnet
 #SBATCH --time=0-00:30:00
-#SBATCH --output=/projects/birdnet/JH_NSWO/birdnet_job_output/%x_%j.out
+#SBATCH --output=/projects/birdnet/chemours/birdnet_job_output/%x_%j.out
 
 # Load pre-requisite module
 module load site/tinkercliffs/easybuild/setup
@@ -20,13 +20,16 @@ export BNENV=/projects/birdnet/env/tc/bna2.4-intel
 source activate $BNENV
 
 # Output directory for species list
-SPECIES_LIST_DIR=/projects/birdnet/JH_NSWO/species_lists
+SPECIES_LIST_DIR=/projects/birdnet/chemours/species_lists_check
 mkdir -p $SPECIES_LIST_DIR
 
-# Generate species list for Week 1
-python $BNENV/BirdNET-Analyzer/get_species_list.py \
-    --lat 37.4121 --lon -80.5227 --week 1 \
-    > $SPECIES_LIST_DIR/species_list_week1.txt
+# Generate species list for week 15
+# Newport VA for NSWO project
 
-# Deactivate the environment
+python $BNENV/BirdNET-Analyzer/species.py \
+  --lat 37.4121 --lon -80.5227 --week 15 \
+  --sortby alpha \
+  --o $SPECIES_LIST_DIR/species_list_week15_newport.txt
+
+# Deactivate environment
 conda deactivate
